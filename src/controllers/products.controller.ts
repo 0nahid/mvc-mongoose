@@ -10,6 +10,9 @@ const createProduct = async (req: Request, res: Response) => {
     if (product.quantity === 0) {
       product.status = "out-of-stock";
     }
+    if (product.price < 0) {
+      product.price = 0;
+    }
     await product.save();
     res.status(201).json({
       message: "Product created successfully",

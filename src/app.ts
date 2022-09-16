@@ -2,6 +2,7 @@ import cors from "cors";
 import "dotenv/config";
 import express, { Application, Request, Response } from "express";
 import path from "path";
+import { productsMiddleware } from "./middleware/mongoose_pre_post";
 const app: Application = express();
 
 /* middleware  */
