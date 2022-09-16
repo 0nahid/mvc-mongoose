@@ -28,4 +28,22 @@ const createProduct = async (req: Request, res: Response) => {
   }
 };
 
-export const productsRouter = { createProduct };
+// get all products
+const getAllProducts = async (req: Request, res: Response) => {
+  try {
+    const products = await ProductModel.find();
+    res.status(200).json({
+      message: "All products",
+      status: 200,
+      data: products,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "No products found",
+      status: 400,
+      error: error,
+    });
+  }
+};
+
+export const productsRouter = { createProduct, getAllProducts };
