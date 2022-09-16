@@ -54,19 +54,19 @@ const productSchema = new Schema(
     //   type: Date,
     //   default: Date.now,
     // },
-    supplier: {
-      type: Schema.Types.ObjectId,
-      ref: "Supplier",
-    },
-    catagories: [
-      {
-        name: {
-          type: String,
-          required: true,
-        },
-        _id: Schema.Types.ObjectId,
-      },
-    ],
+    // supplier: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "Supplier",
+    // },
+    // catagories: [
+    //   {
+    //     name: {
+    //       type: String,
+    //       required: true,
+    //     },
+    //     _id: Schema.Types.ObjectId,
+    //   },
+    // ],
   },
   {
     timestamps: true,
