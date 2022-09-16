@@ -1,7 +1,9 @@
 import cors from "cors";
 import "dotenv/config";
 import express, { Application, Request, Response } from "express";
+import path from "path";
 const app: Application = express();
+
 /* middleware  */
 app.use(cors());
 app.use(express.json());
@@ -11,7 +13,7 @@ import testRoute from "./routes/v1/test";
 
 /* here will be the all the routes */
 app.get("/", (req: Request, res: Response) => {
-  res.sendFile(__dirname + "/public/index.html");
+  res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 
 /* Here is the User Routes */

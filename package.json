@@ -17,6 +17,9 @@
     "ts-node-dev": "^2.0.0"
   },
   "dependencies": {
+    "@types/color": "^3.0.3",
+    "@types/mongoose": "^5.11.97",
+    "colors": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.2",
     "express": "^4.18.1",
