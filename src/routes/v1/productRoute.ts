@@ -14,11 +14,12 @@ const router: Router = Router();
 router
   .route("/")
   .post(productsRouter.createProduct)
-  .get(productsRouter.getAllProducts);
+  .get(productsRouter.getAllProducts)
 
 router
   .route("/:id")
   .get(productsRouter.getSingleProduct)
   .patch(productsRouter.updateProduct);
+
 
 export default router;

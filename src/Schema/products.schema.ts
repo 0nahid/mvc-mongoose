@@ -31,7 +31,7 @@ const productSchema = new Schema(
     quantity: {
       type: Number,
       required: true,
-      minLength: [0, "Quantity cannot be less than 0"],
+      min: [0, "Quantity cannot be less than 0"],
       validate: {
         validator: Number.isInteger,
         message: "{VALUE} is not an integer value",

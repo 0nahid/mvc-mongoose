@@ -10,6 +10,9 @@ const createProduct = async (req: Request, res: Response) => {
     if (product.quantity === 0) {
       product.status = "out-of-stock";
     }
+    if (product.quantity < 0) {
+      product.status = "discontinued";
+    }
     if (product.price < 0) {
       product.price = 0;
     }
@@ -31,7 +34,9 @@ const createProduct = async (req: Request, res: Response) => {
 // get all products
 const getAllProducts = async (req: Request, res: Response) => {
   try {
-    const products = await ProductModel.find();
+    const products = await ProductModel.find({
+      // status: { $ne: "discontinued" },
+    });
     res.status(200).json({
       message: "All products",
       status: 200,
@@ -75,7 +80,7 @@ const updateProduct = async (req: Request, res: Response) => {
         runValidators: true,
       }
     );
-    
+
     res.status(200).json({
       message: "Product updated successfully",
       status: 200,
@@ -90,9 +95,32 @@ const updateProduct = async (req: Request, res: Response) => {
   }
 };
 
+// search for a product
+const searchProduct = async (req: Request, res: Response) => {
+  try {
+    const product = await ProductModel.find({
+      // name: { $regex: req.params.name, $options: "i" },
+      name: "Kiron",
+    });
+    console.log(req.params.name);
+
+    res.status(200).json({
+      message: "Product found",
+      status: 200,
+      data: product,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Product not found",
+      status: 400,
+      error: error,
+    });
+  }
+};
+
 export const productsRouter = {
   createProduct,
   getAllProducts,
   getSingleProduct,
-  updateProduct
+  updateProduct,
 };
