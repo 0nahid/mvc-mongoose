@@ -64,6 +64,35 @@ const getSingleProduct = async (req: Request, res: Response) => {
   }
 };
 
+// update a product
+const updateProduct = async (req: Request, res: Response) => {
+  try {
+    const product = await ProductModel.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    
+    res.status(200).json({
+      message: "Product updated successfully",
+      status: 200,
+      data: product,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Product not updated",
+      status: 400,
+      error: error,
+    });
+  }
+};
 
-
-export const productsRouter = { createProduct, getAllProducts,getSingleProduct };
+export const productsRouter = {
+  createProduct,
+  getAllProducts,
+  getSingleProduct,
+  updateProduct
+};

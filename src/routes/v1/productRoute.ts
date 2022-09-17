@@ -15,7 +15,10 @@ router
   .route("/")
   .post(productsRouter.createProduct)
   .get(productsRouter.getAllProducts);
-  
-router.get("/:id", productsRouter.getSingleProduct);
+
+router
+  .route("/:id")
+  .get(productsRouter.getSingleProduct)
+  .patch(productsRouter.updateProduct);
 
 export default router;
