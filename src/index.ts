@@ -15,3 +15,4 @@ const startServer = async (): Promise<void> => {
   }
 };
 startServer();
+export { app };
