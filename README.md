@@ -1,2 +1,15 @@
-# NodeJs-MVC
-# mvc-mongoose
+> Bulk methods
+
+```
+{
+  "ids": [
+    "id",
+    "id",
+    ...
+  ],
+  "data":{
+    "...":"...",
+    ....
+  }
+}
+```
