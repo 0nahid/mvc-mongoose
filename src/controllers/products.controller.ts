@@ -95,23 +95,21 @@ const updateProduct = async (req: Request, res: Response) => {
   }
 };
 
-// search for a product
-const searchProduct = async (req: Request, res: Response) => {
+// bulk update
+const bulkUpdate = async (req: Request, res: Response) => {
   try {
-    const product = await ProductModel.find({
-      // name: { $regex: req.params.name, $options: "i" },
-      name: "Kiron",
+    const products = await ProductModel.updateMany({ _id:  req.body.ids },  req.body.data, {
+      new: true,
+      runValidators: true,
     });
-    console.log(req.params.name);
-
     res.status(200).json({
-      message: "Product found",
+      message: "Products updated successfully",
       status: 200,
-      data: product,
+      data: products,
     });
   } catch (error) {
     res.status(400).json({
-      message: "Product not found",
+      message: "Products not updated",
       status: 400,
       error: error,
     });
@@ -123,4 +121,5 @@ export const productsRouter = {
   getAllProducts,
   getSingleProduct,
   updateProduct,
+  bulkUpdate,
 };
