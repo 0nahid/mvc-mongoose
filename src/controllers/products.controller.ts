@@ -98,10 +98,22 @@ const updateProduct = async (req: Request, res: Response) => {
 // bulk update
 const bulkUpdate = async (req: Request, res: Response) => {
   try {
-    const products = await ProductModel.updateMany({ _id:  req.body.ids },  req.body.data, {
-      new: true,
-      runValidators: true,
+    // const products = await ProductModel.updateMany({ _id:  req.body.ids },  req.body.data, {
+    //   new: true,
+    //   runValidators: true,
+    // });
+    // req.body.ids.forEach( id => {
+    //   products.push(ProductModel.updateOne({ _id: id }, req.body.data));
+    // })
+    //  handle bulk update for unique products
+    const products: object[] = [];
+    // console.log(req.body.ids);
+    const data = req.body;
+    data.ids.forEach((product: object) => {
+      products.push(ProductModel.updateOne({ _id: product.id }, data.data)); // here is the error 
     });
+    await Promise.all(products);
+    // console.log(req.body.ids);
     res.status(200).json({
       message: "Products updated successfully",
       status: 200,
