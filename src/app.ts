@@ -14,8 +14,7 @@ import testRoute from "./routes/v1/test";
 
 /* here will be the all the routes */
 app.get("/", (req: Request, res: Response) => {
-  // res.sendFile(path.join(__dirname, "../public/index.html"));
-  res.send("Hello World");
+  res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 
 /* Here is the User Routes */

@@ -12,8 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.app = void 0;
 require("dotenv/config");
 const app_1 = require("./app");
+Object.defineProperty(exports, "app", { enumerable: true, get: function () { return app_1.app; } });
 const dbConnect_1 = __importDefault(require("./utils/dbConnect"));
 const MONGO_URI = process.env.MONGO_URI || "";
 const port = process.env.PORT || 5000;
