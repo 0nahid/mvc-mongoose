@@ -122,13 +122,12 @@ const bulkUpdate = async (req: Request, res: Response) => {
       );
       products.push(productData as unknown as Product);
     });
-     await Promise.all(products); // Promise
-
+    const results = await Promise.all(products); // Promise.allSettled(products);
     // console.log(req.body.ids);
     res.status(200).json({
       message: "Products updated successfully",
       status: 200,
-      data: products,
+      data: results,
     });
   } catch (error) {
     res.status(400).json({
