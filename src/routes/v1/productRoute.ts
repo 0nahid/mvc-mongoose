@@ -17,7 +17,48 @@ router
   .post(productsRouter.createProduct)
   .get(productsRouter.getAllProducts);
 
-router.patch("/bulk", productsRouter.bulkUpdate);
+/*** 
+ * @bulkUpdate update many products route (PUT /api/v1/products/bulk)
+ * bulk delete a product route (DELETE /api/v1/products/bulk)
+ * > Bulk methods are not supported by the this route
+{
+  "ids": [
+    "id",
+    "id",
+    ...
+  ],
+  "data":{
+    "...":"...",
+    ....
+  }
+}
+> Bulk unique methods [@latest]
+
+{
+  "ids": [
+    {
+      "id": "...",
+      "data": {
+        "...": "...",
+      }
+    },
+    {
+      "id": "...",
+      "data": {
+        "...": "...",
+      }
+    }
+  ]
+}
+ * bulk delete a product route (DELETE /api/v1/products/bulk)
+  {
+    "ids": ["...", "...", "...", "...", "..." ]
+  }
+ */
+router
+  .route("/bulk")
+  .patch(productsRouter.bulkUpdate)
+  .delete(productsRouter.bulkDelete);
 
 router
   .route("/:id")

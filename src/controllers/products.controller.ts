@@ -155,6 +155,24 @@ const deleteProduct = async (req: Request, res: Response) => {
   }
 };
 
+// bulk delete product
+const bulkDelete = async (req: Request, res: Response) => {
+  // console.log(req.body.ids);
+  try {
+    const products = await ProductModel.deleteMany({ _id: req.body.ids });
+    res.status(200).json({
+      message: "Products deleted successfully",
+      status: 200,
+      data: products,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Products not deleted",
+      status: 400,
+      error: error,
+    });
+  }
+};
 
 export const productsRouter = {
   createProduct,
@@ -162,5 +180,6 @@ export const productsRouter = {
   getSingleProduct,
   updateProduct,
   bulkUpdate,
-  deleteProduct
+  deleteProduct,
+  bulkDelete,
 };
