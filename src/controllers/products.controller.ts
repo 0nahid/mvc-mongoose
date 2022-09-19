@@ -1,6 +1,12 @@
 import { Request, Response } from "express";
 import { ProductModel } from "../models/products.model";
-
+interface Product {
+  _id?: string;
+  name: string;
+  price: number;
+  quantity: number;
+  status: string;
+}
 // post data
 const createProduct = async (req: Request, res: Response) => {
   //   console.log(req.body);
@@ -106,13 +112,18 @@ const bulkUpdate = async (req: Request, res: Response) => {
     //   products.push(ProductModel.updateOne({ _id: id }, req.body.data));
     // })
     //  handle bulk update for unique products
-    const products: object[] = [];
+    const products: Product[] = [];
     // console.log(req.body.ids);
     const data = req.body;
-    data.ids.forEach((product: object) => {
-      products.push(ProductModel.updateOne({ _id: product.id }, data.data)); // here is the error 
+    data.ids.forEach((product: Product) => {
+      const productData = ProductModel.updateOne(
+        { _id: product._id },
+        data.data
+      );
+      products.push(productData as unknown as Product);
     });
-    await Promise.all(products);
+     await Promise.all(products); // Promise
+
     // console.log(req.body.ids);
     res.status(200).json({
       message: "Products updated successfully",
