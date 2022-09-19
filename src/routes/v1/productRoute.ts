@@ -22,6 +22,7 @@ router.patch("/bulk", productsRouter.bulkUpdate);
 router
   .route("/:id")
   .get(productsRouter.getSingleProduct)
-  .patch(productsRouter.updateProduct);
+  .patch(productsRouter.updateProduct)
+  .delete(productsRouter.deleteProduct);
 
 export default router;
