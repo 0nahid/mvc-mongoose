@@ -12,6 +12,7 @@ interface queries {
   limit?: number;
   page?: number;
   fields?: string;
+  skip?: number;
 }
 // post data
 const createProduct = async (req: Request, res: Response) => {
@@ -65,9 +66,18 @@ const getAllProducts = async (req: Request, res: Response) => {
     const fields = req.query.fields.toString().split(",").join(" ");
     queries.fields = fields;
   }
-
+  // pagination logic
+  const { page, limit } = req.query;
+  const pageNumber = parseInt(page as string, 10) || 1;
+  const limitNumber = parseInt(limit as string, 10) || 10;
+  const skip = (pageNumber - 1) * limitNumber;
+  queries.skip = skip;
+  queries.limit = limitNumber;
+  console.log(queries);
   try {
     const products = await ProductModel.find({ ...filters })
+      .skip(queries.skip)
+      .limit(queries.limit)
       .sort(queries.sortBy)
       .select(queries.fields);
     res.status(200).json({
