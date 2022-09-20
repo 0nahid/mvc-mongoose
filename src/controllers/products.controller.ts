@@ -7,6 +7,12 @@ interface Product {
   quantity: number;
   status: string;
 }
+interface queries {
+  sortBy?: string;
+  limit?: number;
+  page?: number;
+  fields?: string;
+}
 // post data
 const createProduct = async (req: Request, res: Response) => {
   //   console.log(req.body);
@@ -39,10 +45,24 @@ const createProduct = async (req: Request, res: Response) => {
 
 // get all products
 const getAllProducts = async (req: Request, res: Response) => {
+  const filters = { ...req.query };
+  // exclude the page and limit from the query
+  const excludedFields = ["page", "limit", "sort"];
+  excludedFields.forEach((field) => delete filters[field]);
+  // build the query
+  let queries:queries = {};
+  if (req.query.sort) {
+    const sortBy = req.query.sort.toString().split(",").join(" ");
+    queries.sortBy = sortBy;
+  }
+  console.log(queries.sortBy);
+  if (req.query.fields){
+    const fields = req.query.fields.toString().split(",").join(" ");
+    queries.fields = fields;
+  }
+
   try {
-    const products = await ProductModel.find({
-      // status: { $ne: "discontinued" },
-    });
+    const products = await ProductModel.find({ ...filters }).sort(queries.sortBy).select(queries.fields);
     res.status(200).json({
       message: "All products",
       status: 200,
