@@ -45,24 +45,31 @@ const createProduct = async (req: Request, res: Response) => {
 
 // get all products
 const getAllProducts = async (req: Request, res: Response) => {
-  const filters = { ...req.query };
+  let filters = { ...req.query };
+  // operators
+  let queryStr = JSON.stringify(filters);
+  queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (match) => `$${match}`);
+  // console.log(JSON.parse(queryStr));
+  filters = JSON.parse(queryStr);
   // exclude the page and limit from the query
   const excludedFields = ["page", "limit", "sort"];
   excludedFields.forEach((field) => delete filters[field]);
   // build the query
-  let queries:queries = {};
+  let queries: queries = {};
   if (req.query.sort) {
     const sortBy = req.query.sort.toString().split(",").join(" ");
     queries.sortBy = sortBy;
   }
-  console.log(queries.sortBy);
-  if (req.query.fields){
+  // console.log(queries.sortBy);
+  if (req.query.fields) {
     const fields = req.query.fields.toString().split(",").join(" ");
     queries.fields = fields;
   }
 
   try {
-    const products = await ProductModel.find({ ...filters }).sort(queries.sortBy).select(queries.fields);
+    const products = await ProductModel.find({ ...filters })
+      .sort(queries.sortBy)
+      .select(queries.fields);
     res.status(200).json({
       message: "All products",
       status: 200,
