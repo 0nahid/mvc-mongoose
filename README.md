@@ -50,6 +50,14 @@
 `const filters = { ...req.query };`
 
 ```
+  // operators
+  let queryStr = JSON.stringify(filters);
+  queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (match) => `$${match}`);
+  // console.log(JSON.parse(queryStr));
+  filters = JSON.parse(queryStr);
+```
+
+```
   // exclude the page and limit from the query
   const excludedFields = ["page", "limit", "sort"];
   excludedFields.forEach((field) => delete filters[field]);
