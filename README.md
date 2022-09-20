@@ -82,3 +82,6 @@ if (req.query.fields){
 const products = await ProductModel.find({ ...filters }).sort(queries.sortBy).select(queries.fields);
 
 ```
+
+> The final get api
+> `http://localhost:5001/api/v1/products?price[gt]=20&sort=quantity&status=out-of-stock&page=1&limit=5`
